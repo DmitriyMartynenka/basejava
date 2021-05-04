@@ -4,10 +4,10 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    public static final int ARRAY_SIZE = 10000;
+    public static final int CAPASITY = 10000;
 
-    Resume[] storage = new Resume[ARRAY_SIZE];
-    private static int size = 0;
+    Resume[] storage = new Resume[CAPASITY];
+    private int size = 0;
 
     void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -20,8 +20,8 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        for (int i = 0; i < ARRAY_SIZE; i++) {
-            if (storage[i] != null && uuid.equals(storage[i].uuid)) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].uuid)) {
                 return storage[i];
             }
         }
@@ -29,17 +29,14 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        for (int i = 0; i < ARRAY_SIZE ; i++) {
-            if (storage[i] != null && uuid.equals(storage[i].uuid)) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].uuid)) {
                 storage[i] = null;
-                size--;
-                for (int j = i+1; j < ARRAY_SIZE; i++, j++) {
-                    if (storage[j] != null) {
-                        storage[i] = storage[j];
-                    } else {
-                        break;
-                    }
+                for (int j = i + 1; j < size; i++, j++) {
+                    storage[i] = storage[j];
+                    storage[j] = null;
                 }
+                size--;
             }
         }
     }
