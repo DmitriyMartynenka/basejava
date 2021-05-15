@@ -8,7 +8,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    public static final int CAPACITY = 10_000;
+    private static final int CAPACITY = 10_000;
 
     private Resume[] storage = new Resume[CAPACITY];
     private int size = 0;
@@ -19,7 +19,7 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        int index = getResumeIndex(resume.getUuid());
+        int index = findResumeIndex(resume.getUuid());
         if (index == -1) {
             System.out.println("Error. Resume with identifier " + resume.getUuid() + " not exist");
         } else {
@@ -28,7 +28,7 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (getResumeIndex(resume.getUuid()) != -1) {
+        if (findResumeIndex(resume.getUuid()) != -1) {
             System.out.println("Error! Resume with identifier " + resume.getUuid() + " has already exist");
         } else if (size == CAPACITY) {
             System.out.println("Error! Storage is full");
@@ -39,7 +39,7 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        int index = getResumeIndex(uuid);
+        int index = findResumeIndex(uuid);
         if (index == -1) {
             System.out.println("Error. Resume with identifier " + uuid + " not exist");
             return null;
@@ -48,7 +48,7 @@ public class ArrayStorage {
     }
 
     public void delete(String uuid) {
-        int index = getResumeIndex(uuid);
+        int index = findResumeIndex(uuid);
         if (index == -1) {
             System.out.println("Error. Resume with identifier " + uuid + " not exist");
         } else {
@@ -69,11 +69,10 @@ public class ArrayStorage {
         return size;
     }
 
-    private int getResumeIndex(String uuid) {
+    private int findResumeIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (uuid.equals(storage[i].getUuid())) {
-                int index = i;
-                return index;
+                return i;
             }
         }
         return -1;
