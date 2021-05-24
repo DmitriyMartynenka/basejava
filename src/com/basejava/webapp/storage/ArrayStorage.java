@@ -1,18 +1,21 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.model.Resume;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void changeIndex(int index) {
+    public void saveResumeToArray(int index, Resume resume) {
+        storage[size] = resume;
     }
 
     @Override
-    protected void removalWay(int index) {
+    protected void deleteResumeFromArray(int index) {
         storage[index] = storage[size - 1];
-        storage[size - 1] = null;
+
     }
 
     @Override
