@@ -1,5 +1,8 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.exception.ExistStorageException;
+import com.basejava.webapp.exception.NotExistStorageException;
+import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -21,7 +24,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume resume) {
         int index = findResumeIndex(resume.getUuid());
         if (index < 0) {
-            System.out.println("Error. Resume with identifier " + resume.getUuid() + " not exist");
+            throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[index] = resume;
         }
@@ -30,13 +33,12 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume resume) {
         int index = findResumeIndex(resume.getUuid());
         if (index >= 0) {
-            System.out.println("Error! Resume with identifier " + resume.getUuid() + " has already exist");
+            throw new ExistStorageException(resume.getUuid());
         } else if (size == CAPACITY) {
-            System.out.println("Error! Storage is full");
+            throw new StorageException("Storage overflow", resume.getUuid());
         } else {
             saveResumeToArray(index, resume);
             size++;
-            System.out.println(Arrays.toString(storage));
         }
     }
 
@@ -45,8 +47,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public Resume get(String uuid) {
         int index = findResumeIndex(uuid);
         if (index < 0) {
-            System.out.println("Error. Resume with identifier " + uuid + " not exist");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
@@ -54,12 +55,11 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = findResumeIndex(uuid);
         if (index < 0) {
-            System.out.println("Error. Resume with identifier " + uuid + " not exist");
+            throw new NotExistStorageException(uuid);
         } else {
             deleteResumeFromArray(index);
             storage[size - 1] = null;
             size--;
-            System.out.println(Arrays.toString(storage));
         }
     }
 
