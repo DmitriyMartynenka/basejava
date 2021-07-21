@@ -2,7 +2,6 @@ package com.basejava.webapp.storage;
 
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
-import com.basejava.webapp.exception.StorageException;
 import com.basejava.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,16 +9,16 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
-    private Storage storage;
+    protected Storage storage;
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
+    protected static final String UUID_1 = "uuid1";
+    protected static final String UUID_2 = "uuid2";
+    protected static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private static final Resume resume1 = new Resume(UUID_1);
-    private static final Resume resume2 = new Resume(UUID_2);
-    private static final Resume resume3 = new Resume(UUID_3);
+    protected static final Resume resume1 = new Resume(UUID_1);
+    protected static final Resume resume2 = new Resume(UUID_2);
+    protected static final Resume resume3 = new Resume(UUID_3);
     private static final Resume resume4 = new Resume(UUID_4);
 
     public AbstractStorageTest(Storage storage) {
@@ -64,17 +63,6 @@ public abstract class AbstractStorageTest {
         storage.save(resume1);
     }
 
-    @Test(expected = StorageException.class)
-    public void saveOverflow() throws Exception {
-        try {
-            for (int i = 4; i <= AbstractArrayStorage.CAPACITY; i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            fail("Overflow happened ahead of time");
-        }
-        storage.save(new Resume());
-    }
 
     @Test
     public void get() throws Exception {

@@ -6,51 +6,51 @@ import com.basejava.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    public abstract void clear();
+    protected abstract void doUpdate(Object searchKey, Resume resume);
 
-    protected abstract void doUpdate(int searchKey, Resume resume);
+    protected abstract void doSave(Object searchKey, Resume resume);
 
-    protected abstract void doSave(int searchKey, Resume resume);
+    protected abstract Resume doGet(Object searchKey);
 
-    protected abstract Resume doGet(int searchKey);
+    protected abstract void doDelete(Object searchKey);
 
-    protected abstract void doDelete(int searchKey);
-
-    protected abstract Integer findResumeIndex(String uuid);
+    protected abstract Object findSearchKey(String uuid);
 
     public void update(Resume resume) {
-        int searchKey = getExistedUuid(resume.getUuid());
-        doUpdate(searchKey, resume);
+        Object searchKey = getExistedUuid(resume.getUuid());
+        doUpdate((Object) searchKey, resume);
     }
 
     public void save(Resume resume) {
-        int searchKey = getNotExistedUuid(resume.getUuid());
-        doSave(searchKey, resume);
+        Object searchKey = getNotExistedUuid(resume.getUuid());
+        doSave((Object) searchKey, resume);
     }
 
     public Resume get(String uuid) {
-        int searchKey = getExistedUuid(uuid);
-        return doGet(searchKey);
+        Object searchKey = getExistedUuid(uuid);
+        return doGet((Object) searchKey);
     }
 
     public void delete(String uuid) {
-        int searchKey = getExistedUuid(uuid);
-        doDelete(searchKey);
+        Object searchKey = getExistedUuid(uuid);
+        doDelete((Object) searchKey);
     }
 
-    private int getExistedUuid(String uuid) {
-        int searchIndex = findResumeIndex(uuid);
-        if (searchIndex < 0) {
+    private Object getExistedUuid(String uuid) {
+        Object searchIndex = findSearchKey(uuid);
+        if (!isSearchKeyFound(searchIndex)) {
             throw new NotExistStorageException(uuid);
         }
         return searchIndex;
     }
 
-    private int getNotExistedUuid(String uuid) {
-        int searchIndex = findResumeIndex(uuid);
-        if (searchIndex >= 0) {
+    private Object getNotExistedUuid(String uuid) {
+        Object searchIndex = findSearchKey(uuid);
+        if (isSearchKeyFound(searchIndex)) {
             throw new ExistStorageException(uuid);
         }
         return searchIndex;
     }
+
+    protected abstract boolean isSearchKeyFound(Object searchKey);
 }
