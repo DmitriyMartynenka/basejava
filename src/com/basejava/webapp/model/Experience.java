@@ -1,16 +1,16 @@
 package com.basejava.webapp.model;
 
-import java.time.LocalDate;
+import java.time.YearMonth;
 
 public class Experience {
 
     private final String title;
     private final String time;
-    private final LocalDate startDate;
-    private final LocalDate endDate;
+    private final YearMonth startDate;
+    private final YearMonth endDate;
     private final String description;
 
-    public Experience(String title, String time, LocalDate startDate, LocalDate endDate, String description) {
+    public Experience(String title, String time, YearMonth startDate, YearMonth endDate, String description) {
         this.title = title;
         this.time = time;
         this.startDate = startDate;
