@@ -31,6 +31,10 @@ public class ExperienceSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return experience.toString();
+        StringBuilder strings = new StringBuilder();
+        for (Experience exp : experience) {
+            strings = strings.append(exp).append("\n");
+        }
+        return strings.toString();
     }
 }

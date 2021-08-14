@@ -28,6 +28,6 @@ public class StringSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return commonInfo;
+        return commonInfo + "\n";
     }
 }

@@ -5,6 +5,7 @@ import com.basejava.webapp.model.*;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ResumeTestData {
     public static void main(String[] args) {
@@ -32,16 +33,27 @@ public class ResumeTestData {
         qualification.getArticle().add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
         List<Experience> educationList = new ArrayList<>();
         List<Experience> jobExperienceList = new ArrayList<>();
-        jobExperienceList.add(new Experience("Alcatel", "09/1997 - 03/1998", YearMonth.of(1997, 9),
+        educationList.add(new Experience("Alcatel", "09/1997 - 03/1998", YearMonth.of(1997, 9),
                 YearMonth.of(1998, 03), "6 месяцев обучения цифровым телефонным сетям (Москва)"));
         educationList.add(new Experience("Заочная физико-техническая школа при МФТИ", "09/1984 - 06/1987",
                 YearMonth.of(1984, 9), YearMonth.of(1987, 06), "Закончил с отличием"));
+        jobExperienceList.add(new Experience("Siemens AG", "01/2005 - 02/2007",
+                YearMonth.of(2005, 01), YearMonth.of(2007, 02), "Разработчик ПО\n" +
+                "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной " +
+                "IN платформе Siemens @vantage (Java, Unix)."));
+
         resume.getSections().put(SectionType.ACHIEVEMENT, achievements);
         resume.getSections().put(SectionType.QUALIFICATIONS, qualification);
         resume.getSections().put(SectionType.EXPERIENCE, new ExperienceSection(jobExperienceList));
         resume.getSections().put(SectionType.EDUCATION, new ExperienceSection(educationList));
 
-        System.out.println(resume.getContacts());
-        System.out.println(resume.getSections());
+        for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+
+        for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
+            System.out.println(entry.getKey() + "\n" + entry.getValue());
+        }
+
     }
 }

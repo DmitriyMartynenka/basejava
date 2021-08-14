@@ -44,12 +44,10 @@ public class Experience {
 
     @Override
     public String toString() {
-        return "Experience{" +
-                "title='" + title + '\'' +
+        return "title='" + title + '\'' +
                 ", time='" + time + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", description='" + description + '\'' +
-                '}';
+                ", description='" + description + '\'';
     }
 }
