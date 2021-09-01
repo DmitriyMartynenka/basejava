@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.basejava.webapp.ResumeTestData.createResume;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
@@ -26,10 +27,17 @@ public abstract class AbstractStorageTest {
     private static final String NAME_3 = "person3";
     private static final String NAME_4 = "person4";
 
-    private static final Resume resume1 = new Resume(UUID_1, NAME_1);
-    private static final Resume resume2 = new Resume(UUID_2, NAME_2);
-    private static final Resume resume3 = new Resume(UUID_3, NAME_3);
-    private static final Resume resume4 = new Resume(UUID_4, NAME_4);
+    private static final Resume resume1;
+    private static final Resume resume2;
+    private static final Resume resume3;
+    private static final Resume resume4;
+
+    static {
+        resume1 = createResume(UUID_1, NAME_1);
+        resume2 = createResume(UUID_2, NAME_2);
+        resume3 = createResume(UUID_3, NAME_3);
+        resume4 = createResume(UUID_4, NAME_4);
+    }
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;

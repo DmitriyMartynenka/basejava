@@ -1,9 +1,12 @@
 package com.basejava.webapp.model;
 
+import java.util.Objects;
+
 public class StringSection extends AbstractSection {
     private final String commonInfo;
 
     public StringSection(String commonInfo) {
+        Objects.requireNonNull(commonInfo, "commonInfo must not be null");
         this.commonInfo = commonInfo;
     }
 

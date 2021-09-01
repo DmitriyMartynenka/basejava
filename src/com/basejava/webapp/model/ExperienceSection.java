@@ -1,12 +1,14 @@
 package com.basejava.webapp.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ExperienceSection extends AbstractSection {
 
     private final List<Experience> experience;
 
     public ExperienceSection(List<Experience> experience) {
+        Objects.requireNonNull(experience, "experience must not be null");
         this.experience = experience;
     }
 

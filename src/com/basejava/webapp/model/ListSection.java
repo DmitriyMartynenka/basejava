@@ -1,12 +1,14 @@
 package com.basejava.webapp.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ListSection extends AbstractSection {
 
     private final List<String> article;
 
     public ListSection(List<String> article) {
+        Objects.requireNonNull(article, "article must not be null");
         this.article = article;
     }
 

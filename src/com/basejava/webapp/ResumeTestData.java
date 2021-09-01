@@ -2,14 +2,18 @@ package com.basejava.webapp;
 
 import com.basejava.webapp.model.*;
 
-import java.time.YearMonth;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class ResumeTestData {
     public static void main(String[] args) {
-        Resume resume = new Resume("Grigiry Kislin");
+        Resume resume = createResume("1", "Grigory");
+    }
+
+    public static Resume createResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
         resume.getContacts().put(ContactType.MOBILE_PHONE, "+7(921) 855-0482");
         resume.getContacts().put(ContactType.SKYPE, "grigory.kislin");
         resume.getContacts().put(ContactType.MAIL, "gkislin@yandex.ru");
@@ -32,19 +36,12 @@ public class ResumeTestData {
         qualification.getArticle().add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
         qualification.getArticle().add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
         List<Experience> educationList = new ArrayList<>();
-        List<Experience> jobExperienceList = new ArrayList<>();
-        educationList.add(new Experience("Alcatel", "09/1997 - 03/1998", YearMonth.of(1997, 9),
-                YearMonth.of(1998, 03), "6 месяцев обучения цифровым телефонным сетям (Москва)"));
-        educationList.add(new Experience("Заочная физико-техническая школа при МФТИ", "09/1984 - 06/1987",
-                YearMonth.of(1984, 9), YearMonth.of(1987, 06), "Закончил с отличием"));
-        jobExperienceList.add(new Experience("Siemens AG", "01/2005 - 02/2007",
-                YearMonth.of(2005, 01), YearMonth.of(2007, 02), "Разработчик ПО\n" +
-                "Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной " +
-                "IN платформе Siemens @vantage (Java, Unix)."));
-
+        educationList.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных " +
+                "технологий, механики и оптики", "someURL", new Experience.EducationStage("Аспирантура (программист С, С++)", 1993,
+                Month.SEPTEMBER, 1996, Month.JULY, null), new Experience.EducationStage("Инженер (программист Fortran, C)", 1987,
+                Month.SEPTEMBER, 1993, Month.JULY, null)));
         resume.getSections().put(SectionType.ACHIEVEMENT, achievements);
         resume.getSections().put(SectionType.QUALIFICATIONS, qualification);
-        resume.getSections().put(SectionType.EXPERIENCE, new ExperienceSection(jobExperienceList));
         resume.getSections().put(SectionType.EDUCATION, new ExperienceSection(educationList));
 
         for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
@@ -54,6 +51,6 @@ public class ResumeTestData {
         for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
             System.out.println(entry.getKey() + "\n" + entry.getValue());
         }
-
+        return resume;
     }
 }
