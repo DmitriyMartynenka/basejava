@@ -107,8 +107,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() throws Exception {
-        List<Resume> expectedList = new ArrayList<>() {
-        };
+        List<Resume> expectedList = new ArrayList<>();
         expectedList.add(resume1);
         expectedList.add(resume2);
         expectedList.add(resume3);

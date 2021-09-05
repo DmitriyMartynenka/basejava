@@ -8,20 +8,20 @@ import java.util.Objects;
 
 import static com.basejava.webapp.util.DateUtil.of;
 
-public class Experience {
+public class OrganizationSection {
 
     private final Link homePage;
-    private final List<EducationStage> stages;
+    private final List<Experience> stages;
 
-    public Experience(String name, String url, EducationStage... stages) {
+    public OrganizationSection(String name, String url, Experience... stages) {
         this(new Link(name, url), Arrays.asList(stages));
     }
 
-    public Experience(Link homePage, EducationStage... stages) {
+    public OrganizationSection(Link homePage, Experience... stages) {
         this(homePage, Arrays.asList(stages));
     }
 
-    public Experience(Link homePage, List<EducationStage> stages) {
+    public OrganizationSection(Link homePage, List<Experience> stages) {
         Objects.requireNonNull(stages, "stages must not be null");
         this.homePage = homePage;
         this.stages = stages;
@@ -32,7 +32,7 @@ public class Experience {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Experience that = (Experience) o;
+        OrganizationSection that = (OrganizationSection) o;
 
         if (homePage != null ? !homePage.equals(that.homePage) : that.homePage != null) return false;
         return stages.equals(that.stages);
@@ -48,28 +48,28 @@ public class Experience {
     @Override
     public String toString() {
         StringBuilder strings = new StringBuilder();
-        for (EducationStage stage : stages) {
+        for (Experience stage : stages) {
             strings = strings.append(stage.toString()).append("\n");
         }
         return homePage +
                 strings.toString();
     }
 
-    public static class EducationStage {
+    public static class Experience {
         private final String title;
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String description;
 
-        public EducationStage(String title, int startYear, Month startMonth, int endYear, Month endMonth, String description) {
+        public Experience(String title, int startYear, Month startMonth, int endYear, Month endMonth, String description) {
             this(title, of(startYear, startMonth), of(endYear, endMonth), description);
         }
 
-        public EducationStage(String title, int startYear, Month startMonth, String description) {
+        public Experience(String title, int startYear, Month startMonth, String description) {
             this(title, of(startYear, startMonth), of(2021, Month.DECEMBER), description);
         }
 
-        public EducationStage(String title, LocalDate startDate, LocalDate endDate, String description) {
+        public Experience(String title, LocalDate startDate, LocalDate endDate, String description) {
             Objects.requireNonNull(title, "title must not be null");
             Objects.requireNonNull(startDate, "startDate must not be null");
             Objects.requireNonNull(endDate, "endDate must not be null");
@@ -96,7 +96,7 @@ public class Experience {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            EducationStage that = (EducationStage) o;
+            Experience that = (Experience) o;
 
             if (!startDate.equals(that.startDate)) return false;
             if (!endDate.equals(that.endDate)) return false;

@@ -5,7 +5,6 @@ import com.basejava.webapp.model.*;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ResumeTestData {
     public static void main(String[] args) {
@@ -35,22 +34,13 @@ public class ResumeTestData {
         qualification.getArticle().add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
         qualification.getArticle().add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
         qualification.getArticle().add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
-        List<Experience> educationList = new ArrayList<>();
-        educationList.add(new Experience("Санкт-Петербургский национальный исследовательский университет информационных " +
-                "технологий, механики и оптики", "someURL", new Experience.EducationStage("Аспирантура (программист С, С++)", 1993,
-                Month.SEPTEMBER, 1996, Month.JULY, null), new Experience.EducationStage("Инженер (программист Fortran, C)", 1987,
+        List<OrganizationSection> educationList = new ArrayList<>();
+        educationList.add(new OrganizationSection("Санкт-Петербургский национальный исследовательский университет информационных " +
+                "технологий, механики и оптики", "someURL", new OrganizationSection.Experience("Аспирантура (программист С, С++)", 1993,
+                Month.SEPTEMBER, 1996, Month.JULY, null), new OrganizationSection.Experience("Инженер (программист Fortran, C)", 1987,
                 Month.SEPTEMBER, 1993, Month.JULY, null)));
         resume.getSections().put(SectionType.ACHIEVEMENT, achievements);
         resume.getSections().put(SectionType.QUALIFICATIONS, qualification);
-        resume.getSections().put(SectionType.EDUCATION, new ExperienceSection(educationList));
-
-        for (Map.Entry<ContactType, String> entry : resume.getContacts().entrySet()) {
-            System.out.println(entry.getKey() + ": " + entry.getValue());
-        }
-
-        for (Map.Entry<SectionType, AbstractSection> entry : resume.getSections().entrySet()) {
-            System.out.println(entry.getKey() + "\n" + entry.getValue());
-        }
         return resume;
     }
 }
