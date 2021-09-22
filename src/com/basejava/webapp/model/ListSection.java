@@ -1,11 +1,17 @@
 package com.basejava.webapp.model;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class ListSection extends AbstractSection {
+public class ListSection extends Section {
+    private static final long serialVersionUID = 1L;
 
     private final List<String> article;
+
+    public ListSection(String... article) {
+        this(Arrays.asList(article));
+    }
 
     public ListSection(List<String> article) {
         Objects.requireNonNull(article, "article must not be null");

@@ -3,7 +3,8 @@ package com.basejava.webapp.model;
 import java.util.List;
 import java.util.Objects;
 
-public class OraganizationList extends AbstractSection {
+public class OraganizationList extends Section {
+    private static final long serialVersionUID = 1L;
 
     private final List<OrganizationSection> organizationSection;
 

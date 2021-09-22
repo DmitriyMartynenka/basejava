@@ -13,16 +13,16 @@ public class ResumeTestData {
 
     public static Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
-        resume.getContacts().put(ContactType.MOBILE_PHONE, "+7(921) 855-0482");
-        resume.getContacts().put(ContactType.SKYPE, "grigory.kislin");
-        resume.getContacts().put(ContactType.MAIL, "gkislin@yandex.ru");
-        resume.getContacts().put(ContactType.LINKEDIN, "someURL");
-        resume.getContacts().put(ContactType.GITHUB, "someURL");
-        resume.getContacts().put(ContactType.STACKOVERFLOW, "someURL");
-        resume.getContacts().put(ContactType.HOMEPAGE, "someURL");
-        resume.getSections().put(SectionType.PERSONAL, new StringSection("Аналитический склад ума, сильная логика, " +
+        resume.addContact(ContactType.MOBILE_PHONE, "+7(921) 855-0482");
+        resume.addContact(ContactType.SKYPE, "grigory.kislin");
+        resume.addContact(ContactType.MAIL, "gkislin@yandex.ru");
+        resume.addContact(ContactType.LINKEDIN, "someURL");
+        resume.addContact(ContactType.GITHUB, "someURL");
+        resume.addContact(ContactType.STACKOVERFLOW, "someURL");
+        resume.addContact(ContactType.HOMEPAGE, "someURL");
+        resume.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, " +
                 "креативность, инициативность. Пурист кода и архитектуры."));
-        resume.getSections().put(SectionType.OBJECTIVE, new StringSection("Ведущий стажировок и корпоративного " +
+        resume.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного " +
                 "обучения по Java Web и Enterprise технологиям"));
         ListSection achievements = new ListSection(new ArrayList<>());
         achievements.getArticle().add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\"," +
@@ -36,11 +36,11 @@ public class ResumeTestData {
         qualification.getArticle().add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
         List<OrganizationSection> educationList = new ArrayList<>();
         educationList.add(new OrganizationSection("Санкт-Петербургский национальный исследовательский университет информационных " +
-                "технологий, механики и оптики", "someURL", new OrganizationSection.Experience("Аспирантура (программист С, С++)", 1993,
-                Month.SEPTEMBER, 1996, Month.JULY, null), new OrganizationSection.Experience("Инженер (программист Fortran, C)", 1987,
+                "технологий, механики и оптики", "someURL", new OrganizationSection.Position("Аспирантура (программист С, С++)", 1993,
+                Month.SEPTEMBER, 1996, Month.JULY, null), new OrganizationSection.Position("Инженер (программист Fortran, C)", 1987,
                 Month.SEPTEMBER, 1993, Month.JULY, null)));
-        resume.getSections().put(SectionType.ACHIEVEMENT, achievements);
-        resume.getSections().put(SectionType.QUALIFICATIONS, qualification);
+        resume.addSection(SectionType.ACHIEVEMENT, achievements);
+        resume.addSection(SectionType.QUALIFICATIONS, qualification);
         return resume;
     }
 }

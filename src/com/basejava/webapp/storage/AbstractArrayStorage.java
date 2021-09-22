@@ -10,9 +10,9 @@ import java.util.List;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
-    protected static final int CAPACITY = 4;
+    protected static final int STORAGE_LIMIT = 10000;
 
-    protected Resume[] storage = new Resume[CAPACITY];
+    protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
     @Override
@@ -22,16 +22,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected void doUpdate(Integer searchKey, Resume resume) {
+    protected void doUpdate(Resume resume, Integer searchKey) {
         storage[searchKey] = resume;
     }
 
     @Override
-    protected void doSave(Integer searchKey, Resume resume) {
-        if (size == CAPACITY) {
+    protected void doSave(Resume resume, Integer searchKey) {
+        if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", resume.getUuid());
         }
-        saveResumeToArray(searchKey, resume);
+        saveResumeToArray(resume, searchKey);
         size++;
     }
 
@@ -47,10 +47,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
         size--;
     }
 
-    protected abstract void saveResumeToArray(int index, Resume resume);
-
-    protected abstract void deleteResumeFromArray(int index);
-
     /**
      * @return array, contains only Resumes in storage (without null)
      */
@@ -65,10 +61,14 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
         return size;
     }
 
-    protected abstract Integer findSearchKey(String uuid);
-
     @Override
     protected boolean isSearchKeyFound(Integer searchKey) {
         return searchKey >= 0;
     }
+
+    protected abstract void saveResumeToArray(Resume resume, int index);
+
+    protected abstract void deleteResumeFromArray(int index);
+
+    protected abstract Integer getSearchKey(String uuid);
 }

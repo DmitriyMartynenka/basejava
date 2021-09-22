@@ -9,17 +9,18 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public abstract class AbstractStorage<SK> implements Storage {
+
     private static final Logger LOG = Logger.getLogger(AbstractStorage.class.getName());
 
-    protected abstract void doUpdate(SK searchKey, Resume resume);
+    protected abstract void doUpdate(Resume resume, SK searchKey);
 
-    protected abstract void doSave(SK searchKey, Resume resume);
+    protected abstract void doSave(Resume resume, SK searchKey);
 
     protected abstract Resume doGet(SK searchKey);
 
     protected abstract void doDelete(SK searchKey);
 
-    protected abstract SK findSearchKey(String uuid);
+    protected abstract SK getSearchKey(String uuid);
 
     protected abstract List<Resume> doGetAll();
 
@@ -34,13 +35,13 @@ public abstract class AbstractStorage<SK> implements Storage {
     public void update(Resume resume) {
         LOG.info("Update " + resume);
         SK searchKey = getExistedKey(resume.getUuid());
-        doUpdate(searchKey, resume);
+        doUpdate(resume, searchKey);
     }
 
     public void save(Resume resume) {
         LOG.info("Save " + resume);
         SK searchKey = getNotExistedKey(resume.getUuid());
-        doSave(searchKey, resume);
+        doSave(resume, searchKey);
     }
 
     public Resume get(String uuid) {
@@ -56,7 +57,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     }
 
     private SK getExistedKey(String uuid) {
-        SK searchKey = findSearchKey(uuid);
+        SK searchKey = getSearchKey(uuid);
         if (!isSearchKeyFound(searchKey)) {
             LOG.warning("Resume with identifier " + uuid + " not exist");
             throw new NotExistStorageException(uuid);
@@ -65,7 +66,7 @@ public abstract class AbstractStorage<SK> implements Storage {
     }
 
     private SK getNotExistedKey(String uuid) {
-        SK searchKey = findSearchKey(uuid);
+        SK searchKey = getSearchKey(uuid);
         if (isSearchKeyFound(searchKey)) {
             LOG.warning("Resume with identifier " + uuid + " has already exist");
             throw new ExistStorageException(uuid);

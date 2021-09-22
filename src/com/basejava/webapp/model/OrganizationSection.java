@@ -1,30 +1,33 @@
 package com.basejava.webapp.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+import static com.basejava.webapp.util.DateUtil.NOW;
 import static com.basejava.webapp.util.DateUtil.of;
 
-public class OrganizationSection {
+public class OrganizationSection implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private final Link homePage;
-    private final List<Experience> stages;
+    private final List<Position> positions;
 
-    public OrganizationSection(String name, String url, Experience... stages) {
-        this(new Link(name, url), Arrays.asList(stages));
+    public OrganizationSection(String name, String url, Position... positions) {
+        this(new Link(name, url), Arrays.asList(positions));
     }
 
-    public OrganizationSection(Link homePage, Experience... stages) {
-        this(homePage, Arrays.asList(stages));
+    public OrganizationSection(Link homePage, Position... positions) {
+        this(homePage, Arrays.asList(positions));
     }
 
-    public OrganizationSection(Link homePage, List<Experience> stages) {
-        Objects.requireNonNull(stages, "stages must not be null");
+    public OrganizationSection(Link homePage, List<Position> positions) {
+        Objects.requireNonNull(positions, "positions must not be null");
         this.homePage = homePage;
-        this.stages = stages;
+        this.positions = positions;
     }
 
     @Override
@@ -35,41 +38,41 @@ public class OrganizationSection {
         OrganizationSection that = (OrganizationSection) o;
 
         if (homePage != null ? !homePage.equals(that.homePage) : that.homePage != null) return false;
-        return stages.equals(that.stages);
+        return positions.equals(that.positions);
     }
 
     @Override
     public int hashCode() {
         int result = homePage != null ? homePage.hashCode() : 0;
-        result = 31 * result + stages.hashCode();
+        result = 31 * result + positions.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         StringBuilder strings = new StringBuilder();
-        for (Experience stage : stages) {
+        for (Position stage : positions) {
             strings = strings.append(stage.toString()).append("\n");
         }
         return homePage +
                 strings.toString();
     }
 
-    public static class Experience {
+    public static class Position implements Serializable {
         private final String title;
         private final LocalDate startDate;
         private final LocalDate endDate;
         private final String description;
 
-        public Experience(String title, int startYear, Month startMonth, int endYear, Month endMonth, String description) {
+        public Position(String title, int startYear, Month startMonth, int endYear, Month endMonth, String description) {
             this(title, of(startYear, startMonth), of(endYear, endMonth), description);
         }
 
-        public Experience(String title, int startYear, Month startMonth, String description) {
-            this(title, of(startYear, startMonth), of(2021, Month.DECEMBER), description);
+        public Position(String title, int startYear, Month startMonth, String description) {
+            this(title, of(startYear, startMonth), NOW, description);
         }
 
-        public Experience(String title, LocalDate startDate, LocalDate endDate, String description) {
+        public Position(String title, LocalDate startDate, LocalDate endDate, String description) {
             Objects.requireNonNull(title, "title must not be null");
             Objects.requireNonNull(startDate, "startDate must not be null");
             Objects.requireNonNull(endDate, "endDate must not be null");
@@ -96,7 +99,7 @@ public class OrganizationSection {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
 
-            Experience that = (Experience) o;
+            Position that = (Position) o;
 
             if (!startDate.equals(that.startDate)) return false;
             if (!endDate.equals(that.endDate)) return false;

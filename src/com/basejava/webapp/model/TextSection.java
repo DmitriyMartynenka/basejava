@@ -2,10 +2,13 @@ package com.basejava.webapp.model;
 
 import java.util.Objects;
 
-public class StringSection extends AbstractSection {
+public class TextSection extends Section {
+
+    private static final long serialVersionUID = 1L;
+
     private final String commonInfo;
 
-    public StringSection(String commonInfo) {
+    public TextSection(String commonInfo) {
         Objects.requireNonNull(commonInfo, "commonInfo must not be null");
         this.commonInfo = commonInfo;
     }
@@ -19,7 +22,7 @@ public class StringSection extends AbstractSection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        StringSection that = (StringSection) o;
+        TextSection that = (TextSection) o;
 
         return commonInfo.equals(that.commonInfo);
     }

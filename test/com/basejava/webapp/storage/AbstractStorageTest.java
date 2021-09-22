@@ -3,9 +3,11 @@ package com.basejava.webapp.storage;
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.Resume;
+import com.basejava.webapp.storage.serialization.SerializationStrategy;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,8 +15,10 @@ import java.util.List;
 import static com.basejava.webapp.ResumeTestData.createResume;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\Basejava\\basejava\\storage");
     protected Storage storage;
 
     private static final String UUID_1 = "uuid1";
@@ -61,7 +65,7 @@ public abstract class AbstractStorageTest {
     public void update() throws Exception {
         Resume anotherResume = new Resume(UUID_1, NAME_1);
         storage.update(anotherResume);
-        assertSame(anotherResume, storage.get(UUID_1));
+        assertTrue(anotherResume.equals(storage.get(UUID_1)));
     }
 
     @Test(expected = NotExistStorageException.class)

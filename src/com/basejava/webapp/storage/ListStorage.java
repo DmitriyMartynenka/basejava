@@ -14,12 +14,12 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected void doUpdate(Integer searchKey, Resume resume) {
+    protected void doUpdate(Resume resume, Integer searchKey) {
         list.set(searchKey, resume);
     }
 
     @Override
-    protected void doSave(Integer searchKey, Resume resume) {
+    protected void doSave(Resume resume, Integer searchKey) {
         list.add(resume);
     }
 
@@ -35,7 +35,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     protected List<Resume> doGetAll() {
-        return list;
+        return new ArrayList<>(list);
     }
 
     @Override
@@ -44,7 +44,7 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    protected Integer findSearchKey(String uuid) {
+    protected Integer getSearchKey(String uuid) {
         for (int i = 0; i < list.size(); i++) {
             if (uuid.equals(list.get(i).getUuid())) {
                 return i;
