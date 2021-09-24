@@ -25,22 +25,24 @@ public class ResumeTestData {
         resume.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного " +
                 "обучения по Java Web и Enterprise технологиям"));
         ListSection achievements = new ListSection(new ArrayList<>());
-        achievements.getArticle().add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\"," +
+        achievements.getArticles().add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\"," +
                 " \"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное " +
                 "взаимодействие (JMS/AKKA)\". Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.");
-        achievements.getArticle().add("Реализация двухфакторной аутентификации для онлайн платформы управления проектами" +
+        achievements.getArticles().add("Реализация двухфакторной аутентификации для онлайн платформы управления проектами" +
                 " Wrike. Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.");
         ListSection qualification = new ListSection(new ArrayList<>());
-        qualification.getArticle().add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
-        qualification.getArticle().add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
-        qualification.getArticle().add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
-        List<OrganizationSection> educationList = new ArrayList<>();
-        educationList.add(new OrganizationSection("Санкт-Петербургский национальный исследовательский университет информационных " +
-                "технологий, механики и оптики", "someURL", new OrganizationSection.Position("Аспирантура (программист С, С++)", 1993,
-                Month.SEPTEMBER, 1996, Month.JULY, null), new OrganizationSection.Position("Инженер (программист Fortran, C)", 1987,
+        qualification.getArticles().add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
+        qualification.getArticles().add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
+        qualification.getArticles().add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
+        List<Organization> educationList = new ArrayList<>();
+        educationList.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
+                "технологий, механики и оптики", "someURL", new Organization.Position("Аспирантура (программист С, С++)", 1993,
+                Month.SEPTEMBER, 1996, Month.JULY, null), new Organization.Position("Инженер (программист Fortran, C)", 1987,
                 Month.SEPTEMBER, 1993, Month.JULY, null)));
+        OraganizationSection education = new OraganizationSection(educationList);
         resume.addSection(SectionType.ACHIEVEMENT, achievements);
         resume.addSection(SectionType.QUALIFICATIONS, qualification);
+        resume.addSection(SectionType.EDUCATION, education);
         return resume;
     }
 }

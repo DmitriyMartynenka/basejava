@@ -27,11 +27,8 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                doDelete(file);
-            }
+        for (File file : getFilesInDirectory()) {
+            doDelete(file);
         }
     }
 
@@ -48,10 +45,10 @@ public class FileStorage extends AbstractStorage<File> {
     protected void doSave(Resume resume, File file) {
         try {
             file.createNewFile();
-            serializationStrategy.doWrite(new BufferedOutputStream(new FileOutputStream(file)), resume);
         } catch (IOException e) {
             throw new StorageException("IO error", file.getName(), e);
         }
+        doUpdate(resume, file);
     }
 
     @Override
@@ -77,12 +74,8 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doGetAll() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Directory read error", null);
-        }
-        List<Resume> resumes = new ArrayList<>(files.length);
-        for (File file : files) {
+        List<Resume> resumes = new ArrayList<>(getFilesInDirectory().length);
+        for (File file : getFilesInDirectory()) {
             resumes.add(doGet(file));
         }
         return resumes;
@@ -95,10 +88,14 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        String[] files = directory.list();
+        return getFilesInDirectory().length;
+    }
+
+    private File[] getFilesInDirectory() {
+        File[] files = directory.listFiles();
         if (files == null) {
             throw new StorageException("Directory read error", null);
         }
-        return files.length;
+        return files;
     }
 }

@@ -25,7 +25,6 @@ public class PathStorage extends AbstractStorage<Path> {
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(directory + " is not directory or is not writable");
         }
-        this.directory = directory;
         this.serializationStrategy = serializationStrategy;
     }
 
@@ -47,10 +46,10 @@ public class PathStorage extends AbstractStorage<Path> {
     protected void doSave(Resume resume, Path path) {
         try {
             Files.createFile(path);
-            serializationStrategy.doWrite(new BufferedOutputStream(Files.newOutputStream(path)), resume);
         } catch (IOException e) {
             throw new StorageException("IO error", path.toString(), e);
         }
+        doUpdate(resume, path);
     }
 
     @Override

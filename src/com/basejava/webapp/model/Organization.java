@@ -10,21 +10,21 @@ import java.util.Objects;
 import static com.basejava.webapp.util.DateUtil.NOW;
 import static com.basejava.webapp.util.DateUtil.of;
 
-public class OrganizationSection implements Serializable {
+public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final Link homePage;
     private final List<Position> positions;
 
-    public OrganizationSection(String name, String url, Position... positions) {
+    public Organization(String name, String url, Position... positions) {
         this(new Link(name, url), Arrays.asList(positions));
     }
 
-    public OrganizationSection(Link homePage, Position... positions) {
+    public Organization(Link homePage, Position... positions) {
         this(homePage, Arrays.asList(positions));
     }
 
-    public OrganizationSection(Link homePage, List<Position> positions) {
+    public Organization(Link homePage, List<Position> positions) {
         Objects.requireNonNull(positions, "positions must not be null");
         this.homePage = homePage;
         this.positions = positions;
@@ -34,18 +34,14 @@ public class OrganizationSection implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
-        OrganizationSection that = (OrganizationSection) o;
-
-        if (homePage != null ? !homePage.equals(that.homePage) : that.homePage != null) return false;
-        return positions.equals(that.positions);
+        Organization that = (Organization) o;
+        return Objects.equals(homePage, that.homePage) &&
+                Objects.equals(positions, that.positions);
     }
 
     @Override
     public int hashCode() {
-        int result = homePage != null ? homePage.hashCode() : 0;
-        result = 31 * result + positions.hashCode();
-        return result;
+        return Objects.hash(homePage, positions);
     }
 
     @Override
@@ -98,20 +94,16 @@ public class OrganizationSection implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-
-            Position that = (Position) o;
-
-            if (!startDate.equals(that.startDate)) return false;
-            if (!endDate.equals(that.endDate)) return false;
-            return description != null ? description.equals(that.description) : that.description == null;
+            Position position = (Position) o;
+            return Objects.equals(title, position.title) &&
+                    Objects.equals(startDate, position.startDate) &&
+                    Objects.equals(endDate, position.endDate) &&
+                    Objects.equals(description, position.description);
         }
 
         @Override
         public int hashCode() {
-            int result = startDate.hashCode();
-            result = 31 * result + endDate.hashCode();
-            result = 31 * result + (description != null ? description.hashCode() : 0);
-            return result;
+            return Objects.hash(title, startDate, endDate, description);
         }
 
         @Override

@@ -7,40 +7,38 @@ import java.util.Objects;
 public class ListSection extends Section {
     private static final long serialVersionUID = 1L;
 
-    private final List<String> article;
+    private final List<String> articles;
 
-    public ListSection(String... article) {
-        this(Arrays.asList(article));
+    public ListSection(String... articles) {
+        this(Arrays.asList(articles));
     }
 
-    public ListSection(List<String> article) {
-        Objects.requireNonNull(article, "article must not be null");
-        this.article = article;
+    public ListSection(List<String> articles) {
+        Objects.requireNonNull(articles, "articles must not be null");
+        this.articles = articles;
     }
 
-    public List<String> getArticle() {
-        return article;
+    public List<String> getArticles() {
+        return articles;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         ListSection that = (ListSection) o;
-
-        return article.equals(that.article);
+        return Objects.equals(articles, that.articles);
     }
 
     @Override
     public int hashCode() {
-        return article.hashCode();
+        return Objects.hash(articles);
     }
 
     @Override
     public String toString() {
         StringBuilder strings = new StringBuilder();
-        for (String s : article) {
+        for (String s : articles) {
             strings = strings.append(s).append("\n");
         }
         return strings.toString();

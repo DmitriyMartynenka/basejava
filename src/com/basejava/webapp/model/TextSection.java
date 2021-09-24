@@ -21,15 +21,13 @@ public class TextSection extends Section {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TextSection that = (TextSection) o;
-
-        return commonInfo.equals(that.commonInfo);
+        return Objects.equals(commonInfo, that.commonInfo);
     }
 
     @Override
     public int hashCode() {
-        return commonInfo.hashCode();
+        return Objects.hash(commonInfo);
     }
 
     @Override
