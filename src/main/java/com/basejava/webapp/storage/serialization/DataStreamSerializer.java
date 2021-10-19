@@ -36,8 +36,9 @@ public class DataStreamSerializer implements SerializationStrategy {
                     case EDUCATION:
                     case EXPERIENCE:
                         writeCollection(dos, ((OrganizationSection) section).getOrganizations(), organization -> {
-                            dos.writeUTF(organization.getHomePage().getName());
-                            dos.writeUTF(organization.getHomePage().getURL());
+                            Link homePage = organization.getHomePage();
+                            dos.writeUTF(homePage.getName());
+                            dos.writeUTF(homePage.getURL());
                             writeCollection(dos, organization.getPositions(), position -> {
                                 dos.writeUTF(position.getTitle());
                                 writeLocalDate(dos, position.getStartDate());
