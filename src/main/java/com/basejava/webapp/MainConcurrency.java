@@ -1,28 +1,38 @@
 package com.basejava.webapp;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainConcurrency {
 
-    private static final Object one = new Object();
-    private static final Object two = new Object();
+    private static int counter;
+    private static final Object LOCK = new Object();
+    private static final int THREAD_NUMBER = 10000;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        new Thread(() -> {
-            synchronized (one) {
-                System.out.println(Thread.currentThread().getName() + " " + Thread.currentThread().getState() + " , object1 lock");
-                synchronized (two) {
-                    System.out.println(Thread.currentThread().getName() + " " + Thread.currentThread().getState() + " , object2 lock");
+        final MainConcurrency mainConcurrency = new MainConcurrency();
+        List<Thread> threads = new ArrayList<>(THREAD_NUMBER);
+        for (int i = 0; i < THREAD_NUMBER; i++) {
+            Thread thread = new Thread(() -> {
+                for (int j = 0; j < 100; j++) {
+                    inc();
                 }
+            });
+            thread.start();
+            threads.add(thread);
+        }
+        threads.forEach(thread -> {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-        }).start();
+        });
+        System.out.println(counter);
+    }
 
-        new Thread(() -> {
-            synchronized (two) {
-                System.out.println(Thread.currentThread().getName() + " " + Thread.currentThread().getState() + " , object2 lock");
-                synchronized (one) {
-                    System.out.println(Thread.currentThread().getName() + " " + Thread.currentThread().getState() + " , object1 lock");
-                }
-            }
-        }).start();
+    private synchronized static void inc() {
+        counter++;
     }
 }
