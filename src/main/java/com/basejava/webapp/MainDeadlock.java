@@ -6,36 +6,28 @@ public class MainDeadlock {
 
     public static void main(String[] args) {
 
-        new Thread(() -> {
-            synchronized (object1) {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                printInfo("object1");
-                synchronized (object2) {
-                    printInfo("object2");
-                }
-            }
-        }).start();
+        threadAction(object1, object2);
+        threadAction(object2, object1);
+    }
 
+    private static void threadAction(Object obj1, Object obj2) {
         new Thread(() -> {
-            synchronized (object2) {
+            synchronized (obj1) {
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                printInfo("object2");
-                synchronized (object1) {
-                    printInfo("object1");
+                printInfo(obj1);
+                synchronized (obj2) {
+                    printInfo(obj2);
                 }
             }
         }).start();
     }
 
-    private static void printInfo(String s) {
-        System.out.println(Thread.currentThread().getName() + " " + Thread.currentThread().getState() + "," + s + " lock");
+    private static void printInfo(Object object) {
+        System.out.println(Thread.currentThread().getName() + " " + Thread.currentThread().getState() + ","
+                + object + " lock");
     }
 }
