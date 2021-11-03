@@ -9,7 +9,9 @@ import java.sql.SQLException;
 public class SqlExceptionConverter {
     public static StorageException convertSqlException(SQLException exception) {
         if(exception instanceof PSQLException) {
-            return new ExistStorageException(null);
+            if(exception.getSQLState().equals("23505")) {
+                return new ExistStorageException(null);
+            }
         }
         return new StorageException(exception);
     }

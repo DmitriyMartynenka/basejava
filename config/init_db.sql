@@ -1,6 +1,6 @@
 create table resume
 (
-    uuid_ char(36) PRIMARY KEY NOT NULL,
+    uuid char(36) PRIMARY KEY NOT NULL,
     full_name text
 );
 
@@ -11,5 +11,5 @@ create table contact
     resume_uuid CHAR(36) NOT null,
     constraint contact_resume_uuid_fk FOREIGN KEY (resume_uuid) REFERENCES resume (uuid_) on delete cascade);
 
-create index contact_uuid_type_index
-	on contact (resume_uuid, type);
+create unique index contact_uuid_type_index
+    on contact (resume_uuid, type);
