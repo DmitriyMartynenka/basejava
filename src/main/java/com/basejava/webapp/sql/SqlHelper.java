@@ -28,4 +28,21 @@ public class SqlHelper {
             throw SqlExceptionConverter.convertSqlException(e);
         }
     }
+
+    public <T> T transactionalExecute(SqlTransaction<T> executor) {
+        try {
+            Connection conn = connectionFactory.getConnection();
+            try {
+                conn.setAutoCommit(false);
+                T result = executor.execute(conn);
+                conn.commit();
+                return result;
+            } catch (SQLException exception) {
+                conn.rollback();
+                throw SqlExceptionConverter.convertSqlException(exception);
+            }
+        } catch (SQLException e) {
+            throw new StorageException(e);
+        }
+    }
 }

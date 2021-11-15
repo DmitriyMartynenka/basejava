@@ -3,6 +3,7 @@ package com.basejava.webapp.storage;
 import com.basejava.webapp.Config;
 import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
+import com.basejava.webapp.model.ContactType;
 import com.basejava.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,6 +42,14 @@ public abstract class AbstractStorageTest {
         resume2 = createResume(UUID_2, NAME_2);
         resume3 = createResume(UUID_3, NAME_3);
         resume4 = createResume(UUID_4, NAME_4);
+        resume1.addContact(ContactType.MOBILE_PHONE, "+7(921) 855-04821");
+        resume1.addContact(ContactType.MAIL, "gkislin@yandex.ru1");
+        resume2.addContact(ContactType.MOBILE_PHONE, "+7(921) 855-04822");
+        resume2.addContact(ContactType.MAIL, "gkislin@yandex.ru2");
+        resume3.addContact(ContactType.MOBILE_PHONE, "+7(921) 855-04823");
+        resume3.addContact(ContactType.MAIL, "gkislin@yandex.ru3");
+        resume4.addContact(ContactType.MOBILE_PHONE, "+7(921) 855-04824");
+        resume4.addContact(ContactType.MAIL, "gkislin@yandex.ru4");
     }
 
     public AbstractStorageTest(Storage storage) {
@@ -65,7 +74,7 @@ public abstract class AbstractStorageTest {
     public void update() throws Exception {
         Resume anotherResume = new Resume(UUID_1, NAME_1);
         storage.update(anotherResume);
-        assertTrue(anotherResume.equals(storage.get(UUID_1)));
+        assertEquals(anotherResume, storage.get(UUID_1));
     }
 
     @Test(expected = NotExistStorageException.class)
