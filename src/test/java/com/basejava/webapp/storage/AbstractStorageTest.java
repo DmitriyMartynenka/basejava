@@ -14,43 +14,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static com.basejava.webapp.ResumeTestData.createResume;
+import static com.basejava.webapp.TestData.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public abstract class AbstractStorageTest {
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
     protected Storage storage;
-
-    private static final String UUID_1 = UUID.randomUUID().toString();
-    private static final String UUID_2 = UUID.randomUUID().toString();
-    private static final String UUID_3 = UUID.randomUUID().toString();
-    private static final String UUID_4 = UUID.randomUUID().toString();
-
-    private static final String NAME_1 = "person1";
-    private static final String NAME_2 = "person2";
-    private static final String NAME_3 = "person3";
-    private static final String NAME_4 = "person4";
-
-    private static final Resume resume1;
-    private static final Resume resume2;
-    private static final Resume resume3;
-    private static final Resume resume4;
-
-    static {
-        resume1 = createResume(UUID_1, NAME_1);
-        resume2 = createResume(UUID_2, NAME_2);
-        resume3 = createResume(UUID_3, NAME_3);
-        resume4 = createResume(UUID_4, NAME_4);
-        resume1.addContact(ContactType.MOBILE_PHONE, "+7(921) 855-04821");
-        resume1.addContact(ContactType.MAIL, "gkislin@yandex.ru1");
-        resume2.addContact(ContactType.MOBILE_PHONE, "+7(921) 855-04822");
-        resume2.addContact(ContactType.MAIL, "gkislin@yandex.ru2");
-        resume3.addContact(ContactType.MOBILE_PHONE, "+7(921) 855-04823");
-        resume3.addContact(ContactType.MAIL, "gkislin@yandex.ru3");
-        resume4.addContact(ContactType.MOBILE_PHONE, "+7(921) 855-04824");
-        resume4.addContact(ContactType.MAIL, "gkislin@yandex.ru4");
-    }
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
