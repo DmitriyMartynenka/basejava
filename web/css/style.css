@@ -1,5 +1,42 @@
+section {
+    width: 900px;
+    margin: auto;
+}
+
 header {
-    background: none repeat scroll 0 0 #A6C9;
-    color: azure;
+    background: none repeat scroll 0 0 #A6C9E2;
+    color: #2E6E9E;
+    font-size: 20px;
     padding: 5px 20px;
+    text-align: center;
+}
+
+footer {
+    background: none repeat scroll 0 0 #A6C9E2;
+    color: #2E6E9E;
+    font-size: 20px;
+    padding: 5px 20px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.attrs {
+    margin: 0 0 20px 0;
+    overflow: hidden;
+}
+.attrs dt {
+    margin: 0;
+    padding: 5px 0;
+    width: 150px;
+    float: left;
+    clear: both;
+    color: #808d9a;
+}
+.attrs dd {
+    margin: 0 0 0 150px;
+    padding: 5px 0;
+}
+
+h2, h3 {
+    margin: 15px 0 5px;
 }

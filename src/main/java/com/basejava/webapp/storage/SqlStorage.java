@@ -1,5 +1,6 @@
 package com.basejava.webapp.storage;
 
+import com.basejava.webapp.exception.ExistStorageException;
 import com.basejava.webapp.exception.NotExistStorageException;
 import com.basejava.webapp.model.ContactType;
 import com.basejava.webapp.model.Resume;
@@ -102,9 +103,8 @@ public class SqlStorage implements Storage {
     @Override
     public void delete(String uuid) {
         LOG.info("Delete " + uuid);
-        sqlHelper.execute("DELETE FROM resume r WHERE r.uuid=?", ps -> {
+        sqlHelper.execute("DELETE FROM resume WHERE uuid=?", ps -> {
             ps.setString(1, uuid);
-            ps.execute();
             if (ps.executeUpdate() == 0) {
                 throw new NotExistStorageException(uuid);
             }
