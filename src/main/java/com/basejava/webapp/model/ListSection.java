@@ -8,6 +8,7 @@ import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ListSection extends Section {
+    public static final Section EMPTY = new ListSection("");
     private static final long serialVersionUID = 1L;
 
     private List<String> articles;
@@ -45,7 +46,7 @@ public class ListSection extends Section {
     public String toString() {
         StringBuilder strings = new StringBuilder();
         for (String s : articles) {
-            strings = strings.append(s).append("\n");
+            strings.append(s).append("\n");
         }
         return strings.toString();
     }

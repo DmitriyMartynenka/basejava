@@ -2,7 +2,9 @@ package com.basejava.webapp;
 
 import com.basejava.webapp.model.*;
 
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class TestData {
@@ -51,5 +53,12 @@ public class TestData {
         qualification.getArticles().add("Languages: Java, Scala, Python/Jython/PL-Python, JavaScript, Groovy");
         resume1.addSection(SectionType.ACHIEVEMENT, achievements);
         resume1.addSection(SectionType.QUALIFICATIONS, qualification);
+        List<Organization> educationList = new ArrayList<>();
+        educationList.add(new Organization("Санкт-Петербургский национальный исследовательский университет информационных " +
+                "технологий, механики и оптики", "someURL", new Organization.Position("Аспирантура (программист С, С++)", 1993,
+                Month.SEPTEMBER, 1996, Month.JULY, null), new Organization.Position("Инженер (программист Fortran, C)", 1987,
+                Month.SEPTEMBER, 1993, Month.JULY, null)));
+        OrganizationSection education = new OrganizationSection(educationList);
+        resume1.addSection(SectionType.EDUCATION, education);
     }
 }

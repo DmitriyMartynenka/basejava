@@ -2,6 +2,7 @@ package com.basejava.webapp.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,6 +18,10 @@ public class OrganizationSection extends Section {
     public OrganizationSection(List<Organization> organizations) {
         Objects.requireNonNull(organizations, "organization must be not null");
         this.organizations = organizations;
+    }
+
+    public OrganizationSection(Organization... organizations) {
+        this(Arrays.asList(organizations));
     }
 
     public List<Organization> getOrganizations() {
@@ -40,7 +45,7 @@ public class OrganizationSection extends Section {
     public String toString() {
         StringBuilder strings = new StringBuilder();
         for (Organization exp : organizations) {
-            strings = strings.append(exp).append("\n");
+            strings.append(exp).append("\n");
         }
         return strings.toString();
     }
